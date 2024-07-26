@@ -1,5 +1,6 @@
 package candidatura;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ProcessoSeletivo {
@@ -9,7 +10,9 @@ public class ProcessoSeletivo {
 		analisarCandidato(2200.0);
 		analisarCandidato(2000.0);
 		
-		selecaoCandidatos();
+		selecaoCandidatos();		
+		imprimirSelecionados();
+		ligacaoCandidatos();
 	}
 	
 	static void selecaoCandidatos() {
@@ -56,4 +59,60 @@ public class ProcessoSeletivo {
 			System.out.println("AGUARDANDO RESULTADO DE DEMAIS CANDIDATOS");			
 		}		
 	}
+	
+	static void imprimirSelecionados() {
+		
+		System.out.println(" ");
+		
+		String [] candidatos = {"FELIPE", "MARCIA", "JULIA", "PAULO", "AUGUSTO"};
+		
+		System.out.println("Imprimindo a lista de candidatos informando o indice do elemento:");
+		
+		for (int i = 0; i < candidatos.length; i++) {
+			System.out.println("O candidato de nº " + (i + 1) + " é o " + candidatos[i]);			
+		}
+		
+		System.out.println("");
+		System.out.println("Forma abreviada de interação for each");
+		
+		for (String candidato : candidatos) {
+			System.out.println("O candidato Selecionado foi " + candidato);
+		}
+	}
+	
+	static void ligacaoCandidatos() {
+		String [] candidatos = {"FELIPE", "MARCIA", "JULIA", "PAULO", "AUGUSTO"};
+		
+		for (String candidato : candidatos) {
+			System.out.println("Ligando para o candidato Selecionado: " + candidato);
+			entrandoEmContato(candidato);
+		}
+	}
+	
+	static void entrandoEmContato(String candidato) {
+		int tentativasRealizadas = 1;
+		boolean continuarTentando = true;
+		boolean atendeu = false;
+		do {
+			atendeu = atender();
+			continuarTentando = !atendeu;
+			
+			if (continuarTentando) {
+				tentativasRealizadas++;
+			} else {
+				System.out.println("CONTATO REALIZADO COM SUCESSO!");
+			}		
+			
+		} while(continuarTentando && tentativasRealizadas < 3);
+		
+		if (atendeu) {
+			System.out.println("CONSEGUIMOS CONTATO COM " + candidato + " NA " + tentativasRealizadas + "º CHAMADA.");			
+		} else {
+			System.out.println("NAO CONSEGUIMOS CONTATO COM " + candidato + ", NUMERO MÁXIMO DE " + tentativasRealizadas + " CHAMADAS");
+		}
+	}
+	
+	static boolean atender() {
+		return new Random().nextInt(3)==1;
+	}	
 }
